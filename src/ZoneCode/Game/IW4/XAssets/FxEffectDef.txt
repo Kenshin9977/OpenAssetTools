@@ -48,3 +48,12 @@ set condition sparkFountainDef FxElemDef::elemType == FX_ELEM_TYPE_SPARK_FOUNTAI
 use FxTrailDef;
 set count verts vertCount;
 set count inds indCount;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign FxElemDefVisuals::markArray 4;
+set allocalign FxElemDefVisuals::array 4;
+set allocalign FxElemExtendedDefPtr::trailDef 4;
+set allocalign FxEffectDef::elemDefs 4;
+set allocalign FxEffectDef 4;
+#endif

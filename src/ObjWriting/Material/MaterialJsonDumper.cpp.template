@@ -129,7 +129,7 @@ namespace
             jWater.codeConstant[2] = water.codeConstant[2];
             jWater.codeConstant[3] = water.codeConstant[3];
 
-#if GAME == "IW5"
+#if defined(FEATURE_IW4) || defined(FEATURE_IW5)
 ##if defined(ARCH_x64)
             if (water.H0X && water.H0Y)
             {

@@ -8,3 +8,9 @@ set count values columnCount * rowCount;
 
 // StringTableCell
 set string StringTableCell::string;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign StringTable::values 4;
+set allocalign StringTable 4;
+#endif

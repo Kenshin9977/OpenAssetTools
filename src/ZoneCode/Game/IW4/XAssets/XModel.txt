@@ -2,6 +2,7 @@
 // XModel
 // =========================================
 use XModel;
+set aliaswordsize 32;
 set block XFILE_BLOCK_TEMP;
 set string name;
 set scriptstring boneNames;
@@ -69,3 +70,14 @@ set count leafs leafCount;
 
 // XModelCollSurf_s
 set count XModelCollSurf_s::collTris numCollTris;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign XModelLodInfo::modelSurfs 4;
+set allocalign XModelSurfs::surfs 4;
+set allocalign XSurface::vertList 4;
+set allocalign XRigidVertList::collisionTree 4;
+set allocalign XModel::materialHandles 4;
+set allocalign XModel::collSurfs 4;
+set allocalign XModel 4;
+#endif

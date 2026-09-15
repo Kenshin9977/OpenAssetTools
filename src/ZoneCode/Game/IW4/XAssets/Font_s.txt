@@ -6,3 +6,8 @@ set block XFILE_BLOCK_TEMP;
 set string fontName;
 set reusable glyphs;
 set count glyphs glyphCount;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign Font_s 4;
+#endif

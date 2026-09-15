@@ -8,3 +8,9 @@ set count primaryLights primaryLightCount;
 
 // ComPrimaryLight
 set string ComPrimaryLight::defName;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign ComWorld::primaryLights 4;
+set allocalign ComWorld 4;
+#endif

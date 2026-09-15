@@ -125,3 +125,23 @@ set count dynEntVisData[0][1] 32 * dynEntClientWordCount[0];
 set count dynEntVisData[1][1] 32 * dynEntClientWordCount[1];
 set count dynEntVisData[0][2] 32 * dynEntClientWordCount[0];
 set count dynEntVisData[1][2] 32 * dynEntClientWordCount[1];
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign GfxCellTree::aabbTree 4;
+set allocalign GfxCell::portals 4;
+set allocalign GfxWorldDraw::reflectionProbes 4;
+set allocalign GfxWorldDraw::reflectionProbeTextures 4;
+set allocalign GfxWorldDraw::lightmaps 4;
+set allocalign GfxWorldDraw::lightmapPrimaryTextures 4;
+set allocalign GfxWorldDraw::lightmapSecondaryTextures 4;
+set allocalign GfxLightRegion::hulls 4;
+set allocalign GfxWorldDpvsStatic::surfaces 4;
+set allocalign GfxWorldDpvsStatic::smodelDrawInsts 4;
+set allocalign GfxWorld::skies 4;
+set allocalign GfxWorld::cells 4;
+set allocalign GfxWorld::materialMemory 4;
+set allocalign GfxWorld::shadowGeom 4;
+set allocalign GfxWorld::lightRegion 4;
+set allocalign GfxWorld 4;
+#endif

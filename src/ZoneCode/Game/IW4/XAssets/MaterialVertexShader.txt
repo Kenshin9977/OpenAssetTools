@@ -10,3 +10,8 @@ set count GfxVertexShaderLoadDef::program programSize;
 
 // MaterialVertexShaderProgram
 set condition MaterialVertexShaderProgram::vs never;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign MaterialVertexShader 4;
+#endif

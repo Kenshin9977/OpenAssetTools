@@ -151,7 +151,7 @@ namespace
             const auto expectedH0Size = water.M * water.N * sizeof(complex_s);
             if (expectedH0Size > 0)
             {
-#if GAME == "IW5"
+#if defined(FEATURE_IW4) || defined(FEATURE_IW5)
 ##if defined(ARCH_x64)
                 const auto count = water.M * water.N;
                 std::vector<complex_s> h0(count);

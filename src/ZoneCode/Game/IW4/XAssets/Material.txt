@@ -19,5 +19,17 @@ set reusable u::water;
 
 // water_t
 use water_t;
+#if defined(ARCH_x64)
+set count H0X N * M;
+set count H0Y N * M;
+#else
 set count H0 N * M;
+#endif
 set count wTerm N * M;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign MaterialTextureDefInfo::water 4;
+set allocalign Material::textureTable 4;
+set allocalign Material 8;
+#endif

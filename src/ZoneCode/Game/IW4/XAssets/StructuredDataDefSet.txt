@@ -24,3 +24,13 @@ set count StructuredDataStruct::properties propertyCount;
 
 // StructuredDataStructProperty
 set string StructuredDataStructProperty::name;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign StructuredDataDef::enums 4;
+set allocalign StructuredDataDef::structs 4;
+set allocalign StructuredDataEnum::entries 4;
+set allocalign StructuredDataStruct::properties 4;
+set allocalign StructuredDataDefSet::defs 4;
+set allocalign StructuredDataDefSet 4;
+#endif

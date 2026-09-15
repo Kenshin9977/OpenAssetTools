@@ -64,3 +64,17 @@ set count glassNames glassNameCount;
 use G_GlassName;
 set string nameStr;
 set count pieceIndices pieceCount;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign pathnode_tree_t 4;
+set allocalign VehicleTrackSegment 4;
+set allocalign PathData::nodes 4;
+set allocalign PathData::nodeTree 4;
+set allocalign VehicleTrack::segments 4;
+set allocalign VehicleTrackSegment::sectors 4;
+set allocalign VehicleTrackSegment::nextBranches 4;
+set allocalign VehicleTrackSegment::prevBranches 4;
+set allocalign GameWorldSp::g_glassData 4;
+set allocalign GameWorldSp 4;
+#endif

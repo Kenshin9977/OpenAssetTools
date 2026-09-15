@@ -10,3 +10,9 @@ set count columns columnCount;
 use LbColumnDef;
 set string name;
 set string statName;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign LeaderboardDef::columns 4;
+set allocalign LeaderboardDef 4;
+#endif

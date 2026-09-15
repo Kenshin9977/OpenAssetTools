@@ -29,3 +29,10 @@ set condition u::codeConst type == MTL_ARG_CODE_VERTEX_CONST
 set condition u::codeSampler type == MTL_ARG_CODE_PIXEL_SAMPLER;
 set condition u::nameHash type == MTL_ARG_MATERIAL_VERTEX_CONST 
 || type == MTL_ARG_MATERIAL_PIXEL_CONST || type == MTL_ARG_MATERIAL_PIXEL_SAMPLER;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign MaterialTechnique 4;
+set allocalign MaterialPass::args 4;
+set allocalign MaterialTechniqueSet 4;
+#endif

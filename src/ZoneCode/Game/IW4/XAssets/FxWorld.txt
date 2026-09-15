@@ -35,3 +35,9 @@ reorder FxGlassDef:
     physPreset
     material
     materialShattered;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign FxGlassSystem::defs 4;
+set allocalign FxWorld 4;
+#endif

@@ -23,7 +23,20 @@ set condition SoundFile::u::loadSnd type == SAT_LOADED;
 // SpeakerMap
 set string SpeakerMap::name;
 
+#if defined(ARCH_x64)
+set count MSSChannelMap::speakers speakerCount;
+#endif
+
 // StreamedSound
 use StreamedSound;
 set string dir;
 set string name;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign snd_alias_t::soundFile 4;
+set allocalign snd_alias_t::speakerMap 4;
+set allocalign MSSChannelMap::speakers 4;
+set allocalign snd_alias_list_t::head 4;
+set allocalign snd_alias_list_t 4;
+#endif

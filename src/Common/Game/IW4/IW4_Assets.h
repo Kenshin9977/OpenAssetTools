@@ -636,7 +636,14 @@ namespace IW4
     struct water_t
     {
         WaterWritable writable;
+#if defined(ARCH_x64)
+        // The updated PC x64 fastfiles split the complex H0 array into its two halves, one pointer
+        // each, exactly as the IW5 x64 rebuild does.
+        float* H0X;
+        float* H0Y;
+#else
         complex_s* H0;
+#endif
         float* wTerm;
         int M;
         int N;
@@ -1764,6 +1771,26 @@ namespace IW4
         StringTableCell* values;
     };
 
+#if defined(ARCH_x64)
+    // Same layout as the IW5 x64 rebuild: a 32-bit-style packed metadata prefix, then two native
+    // pointer slots. The loader uses the value at 0x18 as the byte count of the sample payload.
+    struct AILSOUNDINFO
+    {
+        // A WAVEFORMATEX header (wFormatTag through wBitsPerSample), then Miles metadata.
+        unsigned short format;
+        unsigned short channels;
+        unsigned int rate;
+        unsigned int avgBytesPerSec;
+        unsigned short blockAlign;
+        unsigned short bits;
+        unsigned int unknown0;
+        unsigned int blockSize;
+        unsigned int data_len;
+        unsigned int reserved;
+        const void* data_ptr;
+        const void* initial_ptr;
+    };
+#else
     struct AILSOUNDINFO
     {
         int format;
@@ -1776,6 +1803,7 @@ namespace IW4
         unsigned int block_size;
         const void* initial_ptr;
     };
+#endif
 
     struct MssSound
     {
@@ -1817,6 +1845,20 @@ namespace IW4
         SoundFileRef u;
     };
 
+#if defined(ARCH_x64)
+    // The updated PC x64 fastfiles store eight bytes per speaker entry, behind a pointer. Unlike
+    // IW5's packed 12-byte channel map, IW4's keeps natural alignment: 16 bytes, so SpeakerMap is 80.
+    struct MSSSpeakerLevels
+    {
+        unsigned char payload[8];
+    };
+
+    struct MSSChannelMap
+    {
+        int speakerCount;
+        MSSSpeakerLevels* speakers;
+    };
+#else
     struct MSSSpeakerLevels
     {
         int speaker;
@@ -1829,6 +1871,7 @@ namespace IW4
         int speakerCount;
         MSSSpeakerLevels speakers[6];
     };
+#endif
 
     struct SpeakerMap
     {
@@ -1836,6 +1879,12 @@ namespace IW4
         const char* name;
         MSSChannelMap channelMaps[2][2];
     };
+
+#if defined(ARCH_x64) && !defined(__zonecodegenerator) && !defined(__ida)
+    static_assert(sizeof(MSSSpeakerLevels) == 8);
+    static_assert(sizeof(MSSChannelMap) == 16);
+    static_assert(sizeof(SpeakerMap) == 80);
+#endif
 
     struct snd_alias_t
     {
@@ -3161,8 +3210,18 @@ namespace IW4
         DynEntityClient* dynEntClientList[2];
         DynEntityColl* dynEntCollList[2];
         unsigned int checksum;
+#if defined(ARCH_x64)
+        // The updated PC x64 fastfiles make clipMap_t 512 bytes: zeros from checksum + 4 to +512,
+        // with the first ClipMaterial right after (measured on MW2's airport.ff).
+        char padding[108];
+#else
         char padding[48];
+#endif
     };
+
+#if defined(ARCH_x64) && !defined(__zonecodegenerator) && !defined(__ida)
+    static_assert(sizeof(clipMap_t) == 512);
+#endif
 
     struct ComPrimaryLight
     {

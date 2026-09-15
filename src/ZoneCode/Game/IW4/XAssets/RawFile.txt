@@ -7,3 +7,8 @@ set string name;
 set condition data::compressedBuffer compressedLen > 0;
 set count data::compressedBuffer compressedLen;
 set count data::buffer len + 1;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign RawFile 4;
+#endif

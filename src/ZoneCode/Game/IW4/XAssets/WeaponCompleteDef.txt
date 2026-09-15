@@ -2,6 +2,7 @@
 // WeaponCompleteDef
 // =========================================
 use WeaponCompleteDef;
+set aliaswordsize 32;
 set block XFILE_BLOCK_TEMP;
 set string szInternalName;
 set reusable weapDef;
@@ -23,6 +24,7 @@ set count aiVsPlayerAccuracyGraphKnots aiVsPlayerAccuracyGraphKnotCount;
 use WeaponDef;
 set string szOverlayName;
 set reusable gunXModel;
+set reusable elements WeaponDef::gunXModel;
 set count gunXModel 16;
 set reusable szXAnimsRightHanded;
 set string szXAnimsRightHanded;
@@ -48,6 +50,7 @@ set count notetrackRumbleMapValues 16;
 set reusable bounceSound;
 set count bounceSound SURF_TYPE_NUM;
 set reusable worldModel;
+set reusable elements WeaponDef::worldModel;
 set count worldModel 16;
 set string szAmmoName;
 set string szClipName;
@@ -85,3 +88,15 @@ set condition sound never;
 
 // snd_alias_list_name
 set string snd_alias_list_name::soundName;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign WeaponDef::gunXModel 4;
+set allocalign WeaponDef::szXAnimsRightHanded 4;
+set allocalign WeaponDef::szXAnimsLeftHanded 4;
+set allocalign WeaponDef::bounceSound 4;
+set allocalign WeaponDef::worldModel 4;
+set allocalign WeaponCompleteDef::weapDef 4;
+set allocalign WeaponCompleteDef::szXAnims 4;
+set allocalign WeaponCompleteDef 4;
+#endif

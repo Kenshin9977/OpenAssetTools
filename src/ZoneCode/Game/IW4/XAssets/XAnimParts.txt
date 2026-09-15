@@ -80,3 +80,10 @@ set count u::frames::frames size + 1;
 reorder XAnimDeltaPartQuatDataFrames:
     indices
     frames;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign XAnimDeltaPart::quat 4;
+set allocalign XAnimParts::deltaPart 4;
+set allocalign XAnimParts 4;
+#endif

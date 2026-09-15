@@ -7,3 +7,8 @@ set string name;
 
 // MaterialVertexStreamRouting
 set condition MaterialVertexStreamRouting::decl never;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign MaterialVertexDeclaration 4;
+#endif

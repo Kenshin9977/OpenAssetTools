@@ -15,3 +15,9 @@ set count slabs slabCount;
 
 // Stage
 set string Stage::name;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign MapEnts::stages 4;
+set allocalign MapEnts 4;
+#endif

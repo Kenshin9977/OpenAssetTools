@@ -18,3 +18,8 @@ set block loadDef XFILE_BLOCK_TEMP;
 use GfxImageLoadDef;
 set action LoadImageData(GfxImageLoadDef, GfxImage);
 set arraysize data resourceSize;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign GfxImage 4;
+#endif

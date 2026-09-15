@@ -68,3 +68,16 @@ set reusable borders;
 use cbrush_t;
 set reusable sides;
 set reusable baseAdjacentSide;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign cbrush_t::sides 4;
+set allocalign clipMap_t::staticModelList 4;
+set allocalign clipMap_t::materials 4;
+set allocalign clipMap_t::brushsides 4;
+set allocalign clipMap_t::nodes 4;
+set allocalign clipMap_t::leafbrushNodes 4;
+set allocalign clipMap_t::partitions 4;
+set allocalign clipMap_t::dynEntDefList 4;
+set allocalign clipMap_t 4;
+#endif

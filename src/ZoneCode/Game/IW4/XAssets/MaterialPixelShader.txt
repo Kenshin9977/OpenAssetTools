@@ -10,3 +10,8 @@ set count GfxPixelShaderLoadDef::program programSize;
 
 // MaterialPixelShaderProgram
 set condition MaterialPixelShaderProgram::ps never;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign MaterialPixelShader 4;
+#endif

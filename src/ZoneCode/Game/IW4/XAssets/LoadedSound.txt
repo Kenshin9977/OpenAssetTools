@@ -13,3 +13,8 @@ set count data info::data_len;
 set condition info::data_ptr never;
 set condition info::initial_ptr never;
 set action SetSoundData(MssSound);
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign LoadedSound 4;
+#endif

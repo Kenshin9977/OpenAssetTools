@@ -2,6 +2,7 @@
 // menuDef_t
 // =========================================
 use menuDef_t;
+set aliaswordsize 32;
 set block XFILE_BLOCK_TEMP;
 set string window::name;
 set string font;
@@ -133,7 +134,8 @@ set reusable ItemFloatExpression::expression;
 // UIFunctionList
 use UIFunctionList;
 set count functions totalFunctions;
-set reusable functions; // This statement makes both the array of pointers and the pointers in the array reusable. only the second one is correct however this shouldn't be a problem with vanilla fastfiles.
+set reusable functions;
+set reusable elements functions;
 
 // StaticDvarList
 set count StaticDvarList::staticDvars numStaticDvars;
@@ -147,3 +149,59 @@ set string dvarName;
 use StringList;
 set count strings totalStrings;
 set string strings;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign Statement_s 4;
+set allocalign StaticDvar 4;
+set allocalign MenuEventHandler 4;
+set allocalign itemDef_s 4;
+set allocalign UIFunctionList::functions 4;
+set allocalign Statement_s::entries 4;
+set allocalign Statement_s::supportingData 4;
+set allocalign operandInternalDataUnion::function 4;
+set allocalign StaticDvarList::staticDvars 4;
+set allocalign StringList::strings 4;
+set allocalign MenuEventHandlerSet::eventHandlers 4;
+set allocalign EventData::conditionalScript 4;
+set allocalign EventData::elseScript 4;
+set allocalign EventData::setLocalVarData 4;
+set allocalign ConditionalScript::eventExpression 4;
+set allocalign ConditionalScript::eventHandlerSet 4;
+set allocalign SetLocalVarData::expression 4;
+set allocalign ItemKeyHandler::action 4;
+set allocalign ItemKeyHandler::next 4;
+set allocalign itemDef_s::mouseEnterText 4;
+set allocalign itemDef_s::mouseExitText 4;
+set allocalign itemDef_s::mouseEnter 4;
+set allocalign itemDef_s::mouseExit 4;
+set allocalign itemDef_s::action 4;
+set allocalign itemDef_s::onAccept 4;
+set allocalign itemDef_s::onFocus 4;
+set allocalign itemDef_s::leaveFocus 4;
+set allocalign itemDef_s::onKey 4;
+set allocalign itemDef_s::floatExpressions 4;
+set allocalign itemDef_s::visibleExp 4;
+set allocalign itemDef_s::disabledExp 4;
+set allocalign itemDef_s::textExp 4;
+set allocalign itemDef_s::materialExp 4;
+set allocalign itemDefData_t::listBox 4;
+set allocalign itemDefData_t::multi 4;
+set allocalign listBoxDef_s::onDoubleClick 4;
+set allocalign ItemFloatExpression::expression 4;
+set allocalign menuDef_t::expressionData 4;
+set allocalign menuDef_t::onOpen 4;
+set allocalign menuDef_t::onClose 4;
+set allocalign menuDef_t::onCloseRequest 4;
+set allocalign menuDef_t::onESC 4;
+set allocalign menuDef_t::onKey 4;
+set allocalign menuDef_t::visibleExp 4;
+set allocalign menuDef_t::rectXExp 4;
+set allocalign menuDef_t::rectYExp 4;
+set allocalign menuDef_t::rectWExp 4;
+set allocalign menuDef_t::rectHExp 4;
+set allocalign menuDef_t::openSoundExp 4;
+set allocalign menuDef_t::closeSoundExp 4;
+set allocalign menuDef_t::items 4;
+set allocalign menuDef_t 4;
+#endif

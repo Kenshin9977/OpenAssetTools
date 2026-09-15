@@ -24,3 +24,11 @@ set count baseAdjacentSide BrushWrapper::totalEdgeCount;
 use cbrushside_t;
 set reusable plane;
 set count plane 1;
+
+// x64 rebuild: allocations keep their 32-bit alignment (generated)
+#if defined(ARCH_x64)
+set allocalign PhysGeomInfo::brushWrapper 4;
+set allocalign cbrushWrapper_t::sides 4;
+set allocalign PhysCollmap::geoms 4;
+set allocalign PhysCollmap 4;
+#endif
