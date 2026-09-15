@@ -1600,12 +1600,14 @@ namespace IW5
     // as the byte count for the following sample payload.
     struct AILSOUNDINFO
     {
-        int format;
-        unsigned int frameCount;
-        unsigned int rate;
+        // A WAVEFORMATEX header (wFormatTag through wBitsPerSample), then Miles metadata.
+        unsigned short format;
         unsigned short channels;
+        unsigned int rate;
+        unsigned int avgBytesPerSec;
+        unsigned short blockAlign;
         unsigned short bits;
-        unsigned int payloadSize;
+        unsigned int unknown0;
         unsigned int blockSize;
         unsigned int data_len;
         unsigned int reserved;
