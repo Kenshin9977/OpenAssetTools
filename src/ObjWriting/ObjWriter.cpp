@@ -11,6 +11,22 @@
 
 #include <cassert>
 
+std::vector<asset_type_t> IObjWriter::HandledAssetTypes(AssetDumpingContext& context)
+{
+    m_asset_dumpers.clear();
+    RegisterAssetDumpers(context);
+
+    std::vector<asset_type_t> handled;
+    handled.reserve(m_asset_dumpers.size());
+    for (const auto& dumper : m_asset_dumpers)
+    {
+        const auto type = dumper->GetHandlingAssetType();
+        if (type)
+            handled.push_back(*type);
+    }
+    return handled;
+}
+
 bool IObjWriter::DumpZone(AssetDumpingContext& context)
 {
     m_asset_dumpers.clear();

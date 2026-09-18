@@ -18,6 +18,11 @@ public:
 
     bool DumpZone(AssetDumpingContext& context);
 
+    // Which asset types this game's writer can actually dump. Registering the dumpers is the only
+    // source of truth for that (the set differs per game and grows over time), so callers asking
+    // "is type X covered" get an answer from the code rather than from a hand-kept list.
+    [[nodiscard]] std::vector<asset_type_t> HandledAssetTypes(AssetDumpingContext& context);
+
     static IObjWriter* GetObjWriterForGame(GameId game);
 
 protected:
